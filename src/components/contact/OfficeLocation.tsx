@@ -59,7 +59,7 @@ export default function OfficeLocation() {
 
             <img
               src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1400"
-              alt="Creative Technology Office"
+              alt="Kreative Technology Office"
               className="h-[620px] w-full object-cover transition duration-700 hover:scale-105"
             />
 
@@ -88,7 +88,7 @@ export default function OfficeLocation() {
               <div>
 
                 <h3 className="text-3xl font-bold text-slate-900">
-                  Creative Technology
+                  Kreative Technology
                 </h3>
 
                 <p className="text-slate-500">
@@ -170,7 +170,7 @@ export default function OfficeLocation() {
                   </h4>
 
                   <p className="text-slate-600">
-                    info@creativetech.com
+                    info@kreativetech.com
                   </p>
 
                 </div>
@@ -212,7 +212,7 @@ export default function OfficeLocation() {
             <div className="mt-5 overflow-hidden rounded-xl shadow-lg">
 
               <iframe
-                title="Creative Technology Office"
+                title="Kreative Technology Office"
                 src="https://maps.google.com/maps?q=Plot%20No.%2040%2FC%2C%20Mancheswar%20Industrial%20Estate%2C%20Zone-D%20Sector-A%2C%20Mancheswar%2C%20Bhubaneswar%2C%20Odisha%20751010&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="h-42 w-full border-0"
                 loading="lazy"

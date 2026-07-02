@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../assets/logo.jpeg";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -41,10 +42,14 @@ export default function Navbar() {
         <Link to="/" className="flex items-center gap-3">
 
           <motion.div
-            whileHover={{ rotate: 10, scale: 1.08 }}
-            className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg"
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.3 }}
           >
-            CT
+            <img
+              src={logo}
+              alt="Kreative Technology Logo"
+              className="h-12 w-auto object-contain"
+            />
           </motion.div>
 
           <div>
@@ -53,7 +58,7 @@ export default function Navbar() {
                 scrolled ? "text-slate-900" : "text-white"
               }`}
             >
-              Creative Technology
+              Kreative Technology
             </h2>
 
             <p

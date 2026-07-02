@@ -27,7 +27,7 @@ export default function AboutHero() {
           animate={{ opacity: 1 }}
           className="inline-block rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-sm font-semibold text-cyan-300"
         >
-          ABOUT CREATIVE TECHNOLOGY
+          ABOUT KREATIVE TECHNOLOGY
         </motion.span>
 
         <motion.h1
@@ -51,7 +51,7 @@ export default function AboutHero() {
           transition={{ delay: .3 }}
           className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-slate-300"
         >
-          Creative Technology delivers enterprise software,
+          Kreative Technology delivers enterprise software,
           AI-powered applications, cloud infrastructure,
           networking, cybersecurity and digital transformation
           solutions for modern businesses.

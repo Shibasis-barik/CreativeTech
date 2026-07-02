@@ -18,7 +18,7 @@ const contactInfo = [
   },
   {
     title: "Email",
-    value: "info@creativetech.com",
+    value: "info@kreativetech.com",
     icon: Mail,
     color: "from-indigo-500 to-violet-600",
   },
@@ -36,13 +36,13 @@ const contactInfo = [
   },
   {
     title: "Website",
-    value: "www.creativetech.com",
+    value: "www.kreativetech.com",
     icon: Globe,
     color: "from-rose-500 to-pink-600",
   },
   {
     title: "LinkedIn",
-    value: "Creative Technology",
+    value: "Kreative Technology",
     icon: FaLinkedinIn,
     color: "from-sky-500 to-cyan-600",
   },

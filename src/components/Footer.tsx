@@ -7,7 +7,7 @@ export default function Footer() {
         <div>
 
           <h2 className="text-3xl font-bold">
-            CreativeTech
+            KreativeTech
           </h2>
 
           <p className="mt-5 text-slate-400">
@@ -51,7 +51,7 @@ export default function Footer() {
             Contact
           </h3>
 
-          <p>info@creativetech.com</p>
+          <p>info@kreativetech.com</p>
 
           <p>+91 XXXXX XXXXX</p>
 

@@ -74,7 +74,7 @@ export default function Story() {
             </h2>
 
             <p className="mt-6 leading-8 text-slate-600">
-              Creative Technology was founded with a mission to help
+              Kreative Technology was founded with a mission to help
               organizations embrace digital transformation through
               innovative software, cloud technologies, artificial
               intelligence and enterprise IT services.

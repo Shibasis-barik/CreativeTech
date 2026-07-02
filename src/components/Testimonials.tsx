@@ -8,7 +8,7 @@ const testimonials = [
     role: "CEO",
     image: "https://i.pravatar.cc/150?img=12",
     review:
-      "Creative Technology delivered an outstanding enterprise solution. Their team was highly professional, responsive, and completed everything ahead of schedule.",
+      "Kreative Technology delivered an outstanding enterprise solution. Their team was highly professional, responsive, and completed everything ahead of schedule.",
   },
   {
     name: "Priya Das",
@@ -16,7 +16,7 @@ const testimonials = [
     role: "Project Manager",
     image: "https://i.pravatar.cc/150?img=32",
     review:
-      "Excellent communication, modern UI design, and exceptional technical expertise. We highly recommend Creative Technology.",
+      "Excellent communication, modern UI design, and exceptional technical expertise. We highly recommend Kreative Technology.",
   },
   {
     name: "Rahul Verma",
