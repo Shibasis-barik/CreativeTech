@@ -103,14 +103,18 @@ export default function Navbar() {
 
           {/* CTA Button */}
 
-          <motion.button
+          <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-cyan-400/40"
           >
-            Sign Up
-            <ArrowRight size={18} />
-          </motion.button>
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-cyan-400/40"
+            >
+              Log In
+              <ArrowRight size={18} />
+            </Link>
+          </motion.div>
 
         </div>
 
@@ -168,9 +172,12 @@ export default function Navbar() {
 </NavLink>
               ))}
 
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-3 rounded-xl font-semibold">
-                Sign Up
-              </button>
+              <Link
+                to="/login"
+                className="rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
+              >
+                Login
+              </Link>
 
             </div>
 

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Terminal, CloudCog, ShieldHalf } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 
@@ -100,17 +101,23 @@ export default function Hero() {
           </p>
  
           <div className="mt-8 flex flex-nowrap items-center gap-2 sm:mt-10 sm:gap-4">
-            <button className="group flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#F4F1E8] px-3 py-3 text-xs font-semibold text-[#0B0F14] transition hover:bg-[#FF7A33] hover:text-[#0B0F14] xs:px-4 xs:text-sm sm:flex-none sm:gap-2 sm:px-7 sm:py-4 sm:text-base">
+            <Link
+              to="/contact"
+              className="group flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#F4F1E8] px-3 py-3 text-xs font-semibold text-[#0B0F14] transition hover:bg-[#FF7A33] hover:text-[#0B0F14] xs:px-4 xs:text-sm sm:flex-none sm:gap-2 sm:px-7 sm:py-4 sm:text-base"
+            >
               Start a project
               <ArrowUpRight
                 size={16}
                 className="shrink-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:size-[18px]"
               />
-            </button>
- 
-            <button className="flex-1 whitespace-nowrap rounded-full border border-[#1E2730] px-3 py-3 text-xs font-semibold text-[#F4F1E8] transition hover:border-[#6E8AA6] xs:px-4 xs:text-sm sm:flex-none sm:px-7 sm:py-4 sm:text-base">
+            </Link>
+
+            <Link
+              to="/services"
+              className="flex-1 whitespace-nowrap rounded-full border border-[#1E2730] px-3 py-3 text-xs font-semibold text-[#F4F1E8] transition hover:border-[#6E8AA6] xs:px-4 xs:text-sm sm:flex-none sm:px-7 sm:py-4 sm:text-base"
+            >
               View our work
-            </button>
+            </Link>
           </div>
  
           <div className="mt-10 grid grid-cols-3 gap-3 border-t border-[#1E2730] pt-6 font-mono text-[10px] tracking-wide text-[#93A0AC] sm:gap-6 sm:text-xs lg:mt-14 lg:flex lg:gap-10">
