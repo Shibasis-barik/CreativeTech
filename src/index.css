@@ -9,3 +9,12 @@ body {
   font-family: Inter, Arial, sans-serif;
   background: #ffffff;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

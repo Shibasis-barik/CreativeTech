@@ -1,12 +1,26 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
 import {
   Award,
-  ShieldCheck,
   BadgeCheck,
-//   Cpu,
-//   Cloud,
-//   Code2,
+  Cloud,
+  CloudCog,
+  ShieldCheck,
 } from "lucide-react";
+
+import {
+  SiReact,
+  SiDjango,
+  SiPython,
+  SiNodedotjs,
+  SiTypescript,
+  SiDocker,
+  SiMysql,
+  SiPostgresql,
+  SiLinux,
+  SiGit,
+} from "react-icons/si";
 
 const certifications = [
   {
@@ -27,21 +41,73 @@ const certifications = [
 ];
 
 const technologies = [
-  "React",
-  "Django",
-  "Python",
-  "Node.js",
-  "TypeScript",
-  "AWS",
-  "Azure",
-  "Docker",
-  "MySQL",
-  "PostgreSQL",
-  "Linux",
-  "Git",
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Django", icon: SiDjango, color: "#44B78B" },
+  { name: "Python", icon: SiPython, color: "#3776AB" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "AWS", icon: Cloud, color: "#FF9900" },
+  { name: "Azure", icon: CloudCog, color: "#0089D6" },
+  { name: "Docker", icon: SiDocker, color: "#2496ED" },
+  { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
+  { name: "Linux", icon: SiLinux, color: "#FCC624" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
 ];
 
 export default function Certifications() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const children = Array.from(container.children) as HTMLElement[];
+      if (!children.length) return;
+
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+      let closestIndex = 0;
+      let smallestDistance = Number.POSITIVE_INFINITY;
+
+      children.forEach((child, index) => {
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        const distance = Math.abs(childCenter - containerCenter);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setSelectedIndex(closestIndex);
+    };
+
+    handleScroll();
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    const container = scrollRef.current;
+    const target = container?.children[index] as HTMLElement | undefined;
+    if (!container || !target) return;
+
+    const targetScrollLeft = target.offsetLeft - (container.clientWidth - target.clientWidth) / 2;
+    container.scrollTo({ left: targetScrollLeft, behavior: "smooth" });
+    setSelectedIndex(index);
+  };
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      const next = (selectedIndex + 1) % technologies.length;
+      scrollToIndex(next);
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [selectedIndex]);
+
   return (
     <section className="bg-slate-900 py-20">
 
@@ -109,27 +175,70 @@ export default function Certifications() {
 
         {/* Technologies */}
 
-        <div className="mt-16">
+        <div className="mt-20">
+          <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[120px]"></div>
 
-          <h3 className="text-center text-2xl font-bold text-white mb-8">
+          <h3 className="mb-12 text-center text-3xl font-bold text-white">
             Technologies We Use
           </h3>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="mx-auto max-w-6xl px-2 py-8">
+            <div
+              ref={scrollRef}
+              className="flex gap-8 overflow-x-auto px-2 py-4 scrollbar-hide"
+              style={{ scrollSnapType: "x mandatory" }}
+            >
+              {technologies.map((tech, index) => {
+                const Icon = tech.icon;
+                const active = index === selectedIndex;
 
-            {technologies.map((tech) => (
-
-              <span
-                key={tech}
-                className="rounded-full border border-slate-600 bg-slate-800 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
-              >
-                {tech}
-              </span>
-
-            ))}
-
+                return (
+                  <motion.button
+                    key={tech.name}
+                    type="button"
+                    whileHover={{ scale: 1.06 }}
+                    onClick={() => scrollToIndex(index)}
+                    className="shrink-0 snap-center flex flex-col items-center gap-3"
+                    style={{ scrollSnapAlign: "center" }}
+                  >
+                    <motion.div
+                      animate={{
+                        scale: active ? 1 : 0.75,
+                        opacity: active ? 1 : 0.45,
+                      }}
+                      transition={{ type: "spring", stiffness: 140, damping: 18 }}
+                      className={`flex h-24 w-24 items-center justify-center rounded-full bg-slate-900/80 ring-1 ring-slate-700/60 transition-all duration-300 md:h-28 md:w-28 ${
+                        active
+                          ? "ring-cyan-400/80"
+                          : "ring-slate-700/60"
+                      }`}
+                    >
+                      <Icon size={42} color={tech.color} />
+                    </motion.div>
+                    <span className={`text-sm font-medium transition-opacity duration-300 ${
+                      active ? "text-white opacity-100" : "text-slate-400 opacity-70"
+                    }`}>
+                      {tech.name}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
           </div>
 
+          <div className="mt-8 flex justify-center gap-3">
+            {technologies.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`h-3 rounded-full transition-all duration-300 ${
+                  index === selectedIndex
+                    ? "w-10 bg-cyan-400"
+                    : "w-3 bg-slate-600 hover:bg-slate-500"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
       </div>
