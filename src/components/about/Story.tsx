@@ -5,6 +5,7 @@ import {
   Award,
   Globe,
 } from "lucide-react";
+import officeImg from "../../assets/about/officeImg.jpeg";
 
 export default function Story() {
   return (
@@ -33,8 +34,8 @@ export default function Story() {
             <div className="overflow-hidden rounded-3xl shadow-2xl">
 
               <img
-                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200"
-                alt="Office"
+                src={officeImg}
+                alt="Kreative Technology Office"
                 className="h-[500px] w-full object-cover transition duration-700 hover:scale-110"
               />
 
@@ -74,75 +75,98 @@ export default function Story() {
             </h2>
 
             <p className="mt-6 leading-8 text-slate-600">
-              Kreative Technology was founded with a mission to help
-              organizations embrace digital transformation through
-              innovative software, cloud technologies, artificial
-              intelligence and enterprise IT services.
+              Kreative Technology was founded with a vision to empower businesses, students, and organizations through innovative digital solutions. We specialize in software development, AI solutions, web technologies, cloud services, and IT consulting, helping our clients transform ideas into scalable and efficient technology solutions.
             </p>
 
             <p className="mt-5 leading-8 text-slate-600">
-              Today we partner with startups, SMEs and enterprises to
-              deliver secure, scalable and high-performance technology
-              solutions that create measurable business value.
+              Along with delivering high-quality IT services, we are committed to nurturing future technology professionals through industry-focused training and internship programs. Our goal is to create lasting value by combining innovation, expertise, and a customer-first approach to build a smarter digital future.
             </p>
 
             {/* Stats */}
 
-            <div className="mt-10 grid grid-cols-2 gap-5">
+            {/* Stats */}
 
-              {[
-                {
-                  icon: Building2,
-                  number: "150+",
-                  label: "Projects",
-                },
-                {
-                  icon: Users,
-                  number: "80+",
-                  label: "Clients",
-                },
-                {
-                  icon: Award,
-                  number: "25+",
-                  label: "Awards",
-                },
-                {
-                  icon: Globe,
-                  number: "12",
-                  label: "Countries",
-                },
-              ].map((item) => {
+<div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
 
-                const Icon = item.icon;
+  {[
+    {
+      icon: Building2,
+      number: "150+",
+      label: "Projects",
+    },
+    {
+      icon: Users,
+      number: "80+",
+      label: "Clients",
+    },
+    {
+      icon: Award,
+      number: "25+",
+      label: "Awards",
+    },
+    {
+      icon: Globe,
+      number: "12",
+      label: "Countries",
+    },
+  ].map((item) => {
 
-                return (
+    const Icon = item.icon;
 
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-                  >
+    return (
 
-                    <Icon
-                      className="text-cyan-600"
-                      size={24}
-                    />
+      <motion.div
+        key={item.label}
+        whileHover={{
+          y: -6,
+          scale: 1.03,
+        }}
+        transition={{
+          duration: 0.25,
+        }}
+        className="
+          rounded-xl
+          border
+          border-slate-200
+          bg-white
+          p-4
+          shadow-md
+          hover:shadow-xl
+          flex
+          flex-col
+          justify-center
+          min-h-[150px]
+        "
+      >
 
-                    <h3 className="mt-3 text-2xl font-bold">
-                      {item.number}
-                    </h3>
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50">
 
-                    <p className="text-sm text-slate-500">
-                      {item.label}
-                    </p>
+          <Icon
+            className="text-cyan-600"
+            size={20}
+          />
 
-                  </div>
+        </div>
 
-                );
+        <h3 className="mt-3 text-2xl font-bold text-slate-900">
 
-              })}
+          {item.number}
 
-            </div>
+        </h3>
 
+        <p className="mt-1 text-sm text-slate-500">
+
+          {item.label}
+
+        </p>
+
+      </motion.div>
+
+    );
+
+  })}
+
+</div>
           </motion.div>
 
         </div>

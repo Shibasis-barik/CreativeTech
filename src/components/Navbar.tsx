@@ -30,11 +30,11 @@ export default function Navbar() {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/70 backdrop-blur-xl shadow-xl border-b border-white/20 py-3"
-          : "bg-transparent py-5"
-      }`}
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
+      scrolled
+      ? "bg-white/80 backdrop-blur-xl shadow-xl border-b border-slate-200 py-2"
+      : "bg-slate-900/40 backdrop-blur-xl border-b border-white/10 py-3"
+    }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
 
@@ -42,20 +42,20 @@ export default function Navbar() {
         <Link to="/" className="flex items-center gap-3">
 
           <motion.div
-            whileHover={{ scale: 1.08 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.05 }}
+            className="rounded-xl bg-white/95 p-2 shadow-xl"
           >
             <img
               src={logo}
-              alt="Kreative Technology Logo"
-              className="h-12 w-auto object-contain"
+              alt="Kreative Technology"
+              className="h-8 w-auto"
             />
           </motion.div>
 
           <div>
             <h2
               className={`text-xl font-bold transition ${
-                scrolled ? "text-slate-900" : "text-white"
+                scrolled ? "text-slate-900" : "text-white drop-shadow-lg"
               }`}
             >
               Kreative Technology
@@ -63,7 +63,7 @@ export default function Navbar() {
 
             <p
               className={`text-xs ${
-                scrolled ? "text-slate-500" : "text-slate-300"
+                scrolled ? "text-slate-500" : "text-slate-200"
               }`}
             >
               Software • Cloud • AI
@@ -82,8 +82,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `relative font-medium transition duration-300 ${
                   scrolled
-                    ? "text-slate-700 hover:text-cyan-600"
-                    : "text-white hover:text-cyan-300"
+                  ? "text-slate-800 hover:text-cyan-600"
+                  : "text-white drop-shadow-lg hover:text-cyan-300"
                 } ${isActive ? "text-cyan-500" : ""}`
               }
             >
