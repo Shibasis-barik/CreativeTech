@@ -62,7 +62,7 @@ export default function FloatingParticles() {
             opacity: [0.25, 1, 0.25],
           }}
           transition={{
-            duration: 6 + Math.random() * 4,
+            duration: 6 + (index % 5),
             repeat: Infinity,
             ease: "easeInOut",
             delay: particle.delay,

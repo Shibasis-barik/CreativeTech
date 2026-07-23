@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/logo.jpeg";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -32,8 +33,8 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
       scrolled
-      ? "bg-white/80 backdrop-blur-xl shadow-xl border-b border-slate-200 py-2"
-      : "bg-slate-900/40 backdrop-blur-xl border-b border-white/10 py-3"
+      ? "bg-white/80 backdrop-blur-xl shadow-xl border-b border-slate-200 py-2 dark:bg-slate-950/80 dark:border-slate-700"
+      : "bg-white/75 backdrop-blur-xl border-b border-slate-200 py-3 dark:bg-slate-900/40 dark:border-white/10"
     }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
@@ -55,7 +56,7 @@ export default function Navbar() {
           <div>
             <h2
               className={`text-xl font-bold transition ${
-                scrolled ? "text-slate-900" : "text-white drop-shadow-lg"
+                "text-slate-900 dark:text-white"
               }`}
             >
               Kreative Technology
@@ -63,7 +64,7 @@ export default function Navbar() {
 
             <p
               className={`text-xs ${
-                scrolled ? "text-slate-500" : "text-slate-200"
+                "text-slate-500 dark:text-slate-200"
               }`}
             >
               Software • Cloud • AI
@@ -82,8 +83,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `relative font-medium transition duration-300 ${
                   scrolled
-                  ? "text-slate-800 hover:text-cyan-600"
-                  : "text-white drop-shadow-lg hover:text-cyan-300"
+                  ? "text-slate-800 hover:text-cyan-600 dark:text-slate-100"
+                  : "text-slate-800 hover:text-cyan-600 dark:text-white dark:hover:text-cyan-300"
                 } ${isActive ? "text-cyan-500" : ""}`
               }
             >
@@ -100,6 +101,8 @@ export default function Navbar() {
               )}
             </NavLink>
           ))}
+
+          <ThemeToggle />
 
           {/* CTA Button */}
 
@@ -122,7 +125,7 @@ export default function Navbar() {
 
         <button
           className={`md:hidden ${
-            scrolled ? "text-slate-900" : "text-white"
+            "text-slate-900 dark:text-white"
           }`}
           onClick={() => setOpen(!open)}
         >
@@ -141,7 +144,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
-            className="md:hidden bg-white/80 backdrop-blur-xl border-t border-gray-200 mt-4"
+            className="md:hidden bg-white/90 backdrop-blur-xl border-t border-gray-200 mt-4 dark:bg-slate-950/95 dark:border-slate-700"
           >
 
             <div className="flex flex-col px-6 py-6 gap-5">
@@ -153,8 +156,8 @@ export default function Navbar() {
   className={({ isActive }) =>
     `group relative font-medium transition duration-300 ${
       scrolled
-        ? "text-slate-700 hover:text-cyan-600"
-        : "text-white hover:text-cyan-300"
+        ? "text-slate-700 hover:text-cyan-600 dark:text-slate-100"
+        : "text-slate-700 hover:text-cyan-600 dark:text-white dark:hover:text-cyan-300"
     } ${isActive ? "text-cyan-500" : ""}`
   }
 >
@@ -172,12 +175,15 @@ export default function Navbar() {
 </NavLink>
               ))}
 
-              <Link
+              <div className="flex items-center justify-between">
+                <ThemeToggle />
+                <Link
                 to="/login"
-                className="rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black"
+                className="rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 font-semibold text-white transition hover:shadow-lg"
               >
                 Login
               </Link>
+              </div>
 
             </div>
 

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-white py-16">
+    <footer className="bg-slate-100 text-slate-900 py-16 dark:bg-slate-950 dark:text-white">
 
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
 
@@ -10,7 +10,7 @@ export default function Footer() {
             KreativeTech
           </h2>
 
-          <p className="mt-5 text-slate-400">
+          <p className="mt-5 text-slate-600 dark:text-slate-400">
             Delivering innovative software,
             cloud and IT solutions.
           </p>

@@ -73,7 +73,7 @@ const technologies = [
 
 export default function TechStack() {
   return (
-    <section className="relative overflow-hidden bg-slate-900 py-24">
+    <section className="relative overflow-hidden bg-slate-50 py-24 dark:bg-slate-900">
 
       {/* Background Glow */}
 
@@ -92,15 +92,15 @@ export default function TechStack() {
           className="mb-16 text-center"
         >
 
-          <span className="rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-300">
+          <span className="rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-700 dark:text-cyan-300">
             TECHNOLOGY STACK
           </span>
 
-          <h2 className="mt-5 text-4xl font-bold text-white lg:text-5xl">
+          <h2 className="mt-5 text-4xl font-bold text-slate-900 dark:text-white lg:text-5xl">
             Modern Technologies We Use
           </h2>
 
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-400">
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
             We build scalable, secure and future-ready digital products
             using industry-leading technologies.
           </p>
@@ -137,7 +137,7 @@ export default function TechStack() {
                   y: -6,
                   scale: 1.03,
                 }}
-                className="group rounded-2xl border border-slate-700 bg-white/5 p-6 backdrop-blur-xl transition hover:border-cyan-400 hover:bg-white/10"
+                className="group rounded-2xl border border-slate-200 bg-white/80 p-6 backdrop-blur-xl transition hover:border-cyan-400 hover:bg-white dark:border-slate-700 dark:bg-white/5 dark:hover:bg-white/10"
               >
 
                 <div
@@ -146,7 +146,7 @@ export default function TechStack() {
                   <Icon size={26} />
                 </div>
 
-                <h3 className="mt-5 text-center text-lg font-bold text-white">
+                <h3 className="mt-5 text-center text-lg font-bold text-slate-900 dark:text-white">
                   {tech.name}
                 </h3>
 
