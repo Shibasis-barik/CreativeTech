@@ -63,18 +63,16 @@ const itemVariants: Variants = {
   },
 };
 
-function ParticleField() {
-  const particles = useRef(
-    Array.from({ length: 24 }, (_, i) => ({
-      id: i,
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      size: 1 + Math.random() * 2,
-      duration: 6 + Math.random() * 8,
-      delay: Math.random() * 5,
-    })),
-  ).current;
+const particles = Array.from({ length: 24 }, (_, i) => ({
+  id: i,
+  top: (i * 37 + 11) % 100,
+  left: (i * 61 + 17) % 100,
+  size: 1 + (i % 3),
+  duration: 6 + ((i * 3) % 8),
+  delay: (i * 0.7) % 5,
+}));
 
+function ParticleField() {
   return (
     <div className="pointer-events-none absolute inset-0">
       {particles.map((p) => (
