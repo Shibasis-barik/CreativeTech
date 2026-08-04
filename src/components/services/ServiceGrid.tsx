@@ -21,6 +21,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import backgroundImg from "../../assets/service/backgroundImg.png";
+import { useTheme } from "../../hooks/useTheme";
 
 const services = [
   {
@@ -85,11 +86,16 @@ const services = [
 ];
 
 export default function ServiceGrid() {
+  const { theme } = useTheme();
+
   return (
     <section
-      className="relative isolate overflow-hidden bg-[#050b1d] py-16 sm:py-20 lg:py-24"
+      className="relative isolate overflow-hidden bg-slate-50 py-16 sm:py-20 lg:py-24 dark:bg-[#050b1d]"
       style={{
-        backgroundImage: `linear-gradient(rgba(3, 8, 27, 0.75), rgba(3, 8, 27, 0.92)), url(${backgroundImg})`,
+        backgroundImage:
+          theme === "dark"
+            ? `linear-gradient(rgba(3, 8, 27, 0.75), rgba(3, 8, 27, 0.92)), url(${backgroundImg})`
+            : "none",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -133,7 +139,7 @@ export default function ServiceGrid() {
                 viewport={{ once: true, amount: 0.18 }}
                 transition={{ duration: 0.5, delay: index * 0.07 }}
                 whileHover={{ y: -6 }}
-                className="group relative min-h-[300px] overflow-hidden rounded-[20px] border border-white/10 bg-[linear-gradient(160deg,rgba(10,18,42,0.92),rgba(6,11,28,0.95))] p-5 shadow-[0_16px_38px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-colors duration-300 hover:border-[--accent] sm:p-6"
+                className="group relative min-h-[300px] overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(15,23,42,0.12)] backdrop-blur-sm transition-colors duration-300 hover:border-[--accent] dark:border-white/10 dark:bg-[linear-gradient(160deg,rgba(10,18,42,0.92),rgba(6,11,28,0.95))] dark:shadow-[0_16px_38px_rgba(0,0,0,0.35)] sm:p-6"
                 style={
                   {
                     "--accent": service.accent,
@@ -183,10 +189,10 @@ export default function ServiceGrid() {
                   <Icon size={24} strokeWidth={2.25} />
                 </div>
 
-                <h3 className="relative mt-5 text-[19px] font-extrabold leading-tight tracking-[-0.02em] text-white sm:text-[21px]">
+                <h3 className="relative mt-5 text-[19px] font-extrabold leading-tight tracking-[-0.02em] text-slate-900 dark:text-white sm:text-[21px]">
                   {service.title}
                 </h3>
-                <p className="relative mt-3 max-w-[28rem] text-[13.5px] leading-6 text-slate-300 sm:text-[14.5px]">
+                <p className="relative mt-3 max-w-[28rem] text-[13.5px] leading-6 text-slate-600 dark:text-slate-300 sm:text-[14.5px]">
                   {service.description}
                 </p>
 
@@ -194,7 +200,7 @@ export default function ServiceGrid() {
                   {service.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full border border-white/[0.07] bg-white/[0.08] px-3 py-1 text-[11.5px] font-bold text-slate-200"
+                      className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-[11.5px] font-bold text-slate-600 dark:border-white/[0.07] dark:bg-white/[0.08] dark:text-slate-200"
                     >
                       {tech}
                     </span>

@@ -10,6 +10,7 @@ import {
 import { ArrowRight, Calendar, Cpu, Sparkles, Cloud } from "lucide-react";
 import { SiReact, SiPython, SiDocker } from "react-icons/si";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../hooks/useTheme";
 
 function useCountUp(target: number, active: boolean, duration = 1800) {
   const [value, setValue] = useState(0);
@@ -97,6 +98,7 @@ function ParticleField() {
 }
 
 export default function AboutCTA() {
+  const { theme } = useTheme();
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
@@ -119,8 +121,8 @@ export default function AboutCTA() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative isolate overflow-hidden py-12 sm:py-16 lg:py-20"
-      style={{ background: "linear-gradient(180deg, #020617 0%, #0F172A 100%)" }}
+      className="relative isolate overflow-hidden bg-slate-50 py-12 sm:py-16 lg:py-20 dark:bg-slate-950"
+      style={{ background: theme === "light" ? "linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%)" : "linear-gradient(180deg, #020617 0%, #0F172A 100%)" }}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.05]"
@@ -211,7 +213,7 @@ export default function AboutCTA() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="relative rounded-[40px] border border-white/10 bg-white/[0.04] px-6 py-10 text-center shadow-[0_0_120px_-20px_rgba(34,211,238,0.35)] backdrop-blur-2xl sm:px-10 sm:py-12 lg:px-16 lg:py-14"
+          className="relative rounded-[40px] border border-slate-200 bg-white/80 px-6 py-10 text-center shadow-[0_0_80px_-20px_rgba(34,211,238,0.22)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_0_120px_-20px_rgba(34,211,238,0.35)] sm:px-10 sm:py-12 lg:px-16 lg:py-14"
         >
           <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-b from-white/[0.06] to-transparent" />
 
@@ -224,7 +226,7 @@ export default function AboutCTA() {
 
           <motion.h2
             variants={itemVariants}
-            className="relative mx-auto mt-6 max-w-3xl text-[28px] font-bold leading-[1.15] tracking-tight text-white md:text-[38px] lg:text-[52px]"
+            className="relative mx-auto mt-6 max-w-3xl text-[28px] font-bold leading-[1.15] tracking-tight text-slate-900 dark:text-white md:text-[38px] lg:text-[52px]"
           >
             Transform your ideas into{" "}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -234,7 +236,7 @@ export default function AboutCTA() {
 
           <motion.p
             variants={itemVariants}
-            className="relative mx-auto mt-4 max-w-2xl text-sm text-slate-400 sm:text-base lg:text-lg"
+            className="relative mx-auto mt-4 max-w-2xl text-sm text-slate-600 dark:text-slate-400 sm:text-base lg:text-lg"
           >
             From AI-powered applications and enterprise software to cloud
             infrastructure and cybersecurity, we build scalable digital
@@ -273,7 +275,7 @@ export default function AboutCTA() {
               <motion.span
                 whileHover={{ scale: 1.04, y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-7 py-3.5 font-semibold text-white backdrop-blur-xl transition-colors duration-300 hover:border-cyan-300/40 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 bg-white px-7 py-3.5 font-semibold text-slate-700 backdrop-blur-xl transition-colors duration-300 hover:border-cyan-300 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:border-cyan-300/40 dark:hover:bg-white/10"
               >
                 <Calendar size={18} />
                 Schedule a consultation
@@ -303,12 +305,12 @@ function StatCard({
   const count = useCountUp(stat.target, active);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-3.5 backdrop-blur-xl sm:px-4 sm:py-4">
-      <p className="text-xl font-bold text-white sm:text-2xl">
+    <div className="rounded-2xl border border-slate-200 bg-white/80 px-3 py-3.5 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.03] sm:px-4 sm:py-4">
+      <p className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl">
         {count}
         {stat.suffix}
       </p>
-      <p className="mt-1 text-xs text-slate-400">{stat.label}</p>
+      <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">{stat.label}</p>
     </div>
   );
 }

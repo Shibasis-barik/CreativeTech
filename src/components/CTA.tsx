@@ -7,10 +7,10 @@ import {
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden py-14">
+    <section className="relative overflow-hidden bg-gradient-to-br from-cyan-50 via-white to-blue-50 py-14 dark:bg-none">
 
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-cyan-900 to-blue-900"></div>
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-slate-900 via-cyan-900 to-blue-900 dark:block"></div>
 
       {/* Glow */}
       <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"></div>
@@ -23,7 +23,7 @@ export default function CTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: .6 }}
-          className="rounded-3xl border border-white/10 bg-white/10 backdrop-blur-xl p-10 lg:p-16 shadow-2xl"
+          className="rounded-3xl border border-slate-200 bg-white/80 backdrop-blur-xl p-10 shadow-xl dark:border-white/10 dark:bg-white/10 dark:shadow-2xl lg:p-16"
         >
 
           <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -32,16 +32,16 @@ export default function CTA() {
 
             <div>
 
-              <span className="inline-block rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-300">
+              <span className="inline-block rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-700 dark:text-cyan-300">
                 LET'S BUILD TOGETHER
               </span>
 
-              <h2 className="mt-6 text-4xl font-bold leading-tight text-white lg:text-6xl">
+              <h2 className="mt-6 text-4xl font-bold leading-tight text-slate-900 dark:text-white lg:text-6xl">
                 Ready to Transform
                 <span className="text-cyan-400"> Your Business?</span>
               </h2>
 
-              <p className="mt-6 text-lg leading-8 text-slate-300">
+              <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-300">
                 We help startups and enterprises build scalable software,
                 cloud infrastructure, AI-powered applications, networking,
                 and digital transformation solutions.
@@ -60,7 +60,7 @@ export default function CTA() {
 
                   <div
                     key={item}
-                    className="flex items-center gap-2 text-white"
+                    className="flex items-center gap-2 text-slate-700 dark:text-white"
                   >
                     <CheckCircle2
                       size={18}
@@ -81,7 +81,7 @@ export default function CTA() {
 
             {/* Right */}
 
-            <div className="flex flex-col items-center justify-center rounded-3xl bg-white/10 p-8 backdrop-blur-lg">
+            <div className="flex flex-col items-center justify-center rounded-3xl bg-slate-100/80 p-8 backdrop-blur-lg dark:bg-white/10">
 
               <div className="text-center">
 
@@ -94,11 +94,11 @@ export default function CTA() {
 
                 </div>
 
-                <h3 className="mt-6 text-3xl font-bold text-white">
+                <h3 className="mt-6 text-3xl font-bold text-slate-900 dark:text-white">
                   Start Your Project
                 </h3>
 
-                <p className="mt-4 text-slate-300">
+                <p className="mt-4 text-slate-600 dark:text-slate-300">
                   Schedule a free consultation with our experts today.
                 </p>
 
@@ -116,7 +116,7 @@ export default function CTA() {
 
                 </button>
 
-                <button className="rounded-xl border border-white/20 px-6 py-4 font-semibold text-white transition hover:bg-white/10">
+                <button className="rounded-xl border border-slate-300 px-6 py-4 font-semibold text-slate-700 transition hover:bg-slate-200 dark:border-white/20 dark:text-white dark:hover:bg-white/10">
                   Book a Meeting
                 </button>
 
