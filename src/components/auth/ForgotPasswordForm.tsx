@@ -6,7 +6,7 @@ export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/10 p-8 backdrop-blur-2xl shadow-2xl">
+    <div className="auth-card rounded-3xl border border-white/10 bg-white/10 p-8 backdrop-blur-2xl shadow-2xl">
 
       <h2 className="text-3xl font-bold text-white">
         Forgot Password

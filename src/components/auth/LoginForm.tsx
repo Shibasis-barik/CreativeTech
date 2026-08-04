@@ -14,6 +14,7 @@ export default function LoginForm() {
   return (
     <div
       className="
+      auth-card
       relative
       rounded-[34px]
       border

@@ -162,7 +162,7 @@ export default function TechStack() {
                   <motion.div
                     animate={{ scale, opacity }}
                     transition={{ type: "spring", stiffness: 160, damping: 20 }}
-                    className="relative flex h-20 w-20 items-center justify-center rounded-full bg-slate-900/80 ring-1 ring-slate-700/60 sm:h-24 sm:w-24 md:h-28 md:w-28"
+                    className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white ring-1 ring-slate-200 shadow-sm dark:bg-slate-900/80 dark:ring-slate-700/60 dark:shadow-none sm:h-24 sm:w-24 md:h-28 md:w-28"
                   >
                     {active && (
                       <motion.div
@@ -180,7 +180,7 @@ export default function TechStack() {
                   </motion.div>
                   <span
                     className={`text-xs font-medium transition-opacity duration-300 sm:text-sm ${
-                      active ? "text-white opacity-100" : "text-slate-400 opacity-70"
+                      active ? "text-slate-900 dark:text-white opacity-100" : "text-slate-500 dark:text-slate-400 opacity-70"
                     }`}
                   >
                     {tech.name}

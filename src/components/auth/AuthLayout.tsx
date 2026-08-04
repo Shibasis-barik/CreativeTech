@@ -9,7 +9,7 @@ interface Props {
 
 export default function AuthLayout({ children }: Props) {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#0B0F14]">
+    <section className="auth-theme relative min-h-screen overflow-hidden bg-slate-50 dark:bg-[#0B0F14]">
 
       {/* Blueprint Grid */}
     <div
@@ -54,11 +54,11 @@ export default function AuthLayout({ children }: Props) {
 
     <div>
 
-      <h2 className="text-3xl font-bold text-white">
+      <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
         Kreative Technology
       </h2>
 
-      <p className="text-slate-400">
+      <p className="text-slate-600 dark:text-slate-400">
         Software • Cloud • AI
       </p>
 
@@ -68,11 +68,11 @@ export default function AuthLayout({ children }: Props) {
 
   {/* Heading */}
 
-  <h1 className="mt-12 text-6xl font-bold leading-tight text-white">
+  <h1 className="mt-12 text-6xl font-bold leading-tight text-slate-900 dark:text-white">
     Welcome Back
   </h1>
 
-  <p className="mt-6 max-w-xl text-xl leading-9 text-slate-400">
+  <p className="mt-6 max-w-xl text-xl leading-9 text-slate-600 dark:text-slate-400">
     Sign in to access your dashboard, monitor your projects,
     collaborate with your engineering team, and manage
     your digital infrastructure securely.

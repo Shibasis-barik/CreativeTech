@@ -119,7 +119,7 @@ function CertificationBadge({
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       whileHover={{ y: -8 }}
-      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center backdrop-blur-2xl transition-colors duration-300 hover:border-white/20"
+      className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm backdrop-blur-2xl transition-colors duration-300 hover:border-cyan-200 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none dark:hover:border-white/20"
     >
       {/* ambient glow that blooms on hover */}
       <div
@@ -139,7 +139,7 @@ function CertificationBadge({
             className={`absolute inset-0 rounded-full bg-gradient-to-tr ${cert.ring} opacity-70 blur-[6px]`}
           />
           <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${cert.ring} p-[2.5px]`}>
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-slate-950">
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-slate-100 dark:bg-slate-950">
               <Icon size={30} color={cert.accent} strokeWidth={1.8} />
             </div>
           </div>
@@ -148,8 +148,8 @@ function CertificationBadge({
         <div className="mt-4 flex items-center gap-2">
           <LaurelBranch color={cert.accent} />
           <div>
-            <h3 className="text-base font-bold leading-tight text-white">{cert.code}</h3>
-            <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-400">
+            <h3 className="text-base font-bold leading-tight text-slate-900 dark:text-white">{cert.code}</h3>
+            <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               {cert.title}
             </p>
           </div>
@@ -229,7 +229,7 @@ export default function Certifications() {
   );
 
   return (
-    <section className="relative overflow-hidden bg-slate-900 py-20">
+    <section className="relative overflow-hidden bg-slate-50 py-20 dark:bg-slate-900">
       {/* animated gradient glow field */}
       <motion.div
         aria-hidden
@@ -252,15 +252,15 @@ export default function Certifications() {
           viewport={{ once: true }}
           className="mb-14 text-center"
         >
-          <span className="inline-block rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-300">
+          <span className="inline-block rounded-full bg-cyan-500/20 px-4 py-2 text-sm font-semibold text-cyan-700 dark:text-cyan-300">
             CERTIFICATIONS & TECHNOLOGIES
           </span>
 
-          <h2 className="mt-5 text-4xl font-bold text-white">
+          <h2 className="mt-5 text-4xl font-bold text-slate-900 dark:text-white">
             Trusted Technologies & Best Practices
           </h2>
 
-          <p className="mx-auto mt-4 max-w-3xl text-slate-400">
+          <p className="mx-auto mt-4 max-w-3xl text-slate-600 dark:text-slate-400">
             We follow industry standards and use modern technologies
             to deliver secure, scalable and high-performance solutions.
           </p>
@@ -275,7 +275,7 @@ export default function Certifications() {
 
         {/* Technologies */}
         <div className="mt-24">
-          <h3 className="mb-10 text-center text-2xl font-bold text-white sm:mb-12 sm:text-3xl">
+          <h3 className="mb-10 text-center text-2xl font-bold text-slate-900 dark:text-white sm:mb-12 sm:text-3xl">
             Technologies We Use
           </h3>
 
@@ -309,7 +309,7 @@ export default function Certifications() {
                     <motion.div
                       animate={{ scale, opacity }}
                       transition={{ type: "spring", stiffness: 160, damping: 20 }}
-                      className="relative flex h-20 w-20 items-center justify-center rounded-full bg-slate-900/80 ring-1 ring-slate-700/60 sm:h-24 sm:w-24 md:h-28 md:w-28"
+                      className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white ring-1 ring-slate-200 shadow-sm dark:bg-slate-900/80 dark:ring-slate-700/60 dark:shadow-none sm:h-24 sm:w-24 md:h-28 md:w-28"
                     >
                       {active && (
                         <motion.div
@@ -327,7 +327,7 @@ export default function Certifications() {
                     </motion.div>
                     <span
                       className={`text-xs font-medium transition-opacity duration-300 sm:text-sm ${
-                        active ? "text-white opacity-100" : "text-slate-400 opacity-70"
+                        active ? "text-slate-900 dark:text-white opacity-100" : "text-slate-500 dark:text-slate-400 opacity-70"
                       }`}
                     >
                       {tech.name}
