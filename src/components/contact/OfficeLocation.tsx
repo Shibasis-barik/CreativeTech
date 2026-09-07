@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import officeLocationImage from "../../assets/officeImg.jpeg";
 import {
   MapPin,
   Navigation,
@@ -58,7 +59,7 @@ export default function OfficeLocation() {
           >
 
             <img
-              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1400"
+              src={officeLocationImage}
               alt="Kreative Technology Office"
               className="h-[620px] w-full object-cover transition duration-700 hover:scale-105"
             />

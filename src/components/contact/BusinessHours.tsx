@@ -10,12 +10,12 @@ import {
 const schedule = [
   {
     day: "Monday - Friday",
-    time: "9:00 AM - 6:00 PM",
+    time: "10:00 AM - 05:00 PM",
     active: true,
   },
   {
     day: "Saturday",
-    time: "10:00 AM - 3:00 PM",
+    time: "10:00 AM - 01:00 PM",
     active: true,
   },
   {
