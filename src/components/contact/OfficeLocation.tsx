@@ -148,7 +148,7 @@ export default function OfficeLocation() {
                   </h4>
 
                   <p className="text-slate-600">
-                    +91 XXXXX XXXXX
+                    +91 9861152922
                   </p>
 
                 </div>
@@ -171,7 +171,7 @@ export default function OfficeLocation() {
                   </h4>
 
                   <p className="text-slate-600">
-                    info@kreativetech.com
+                    kreative_tech@rediffmail.com
                   </p>
 
                 </div>

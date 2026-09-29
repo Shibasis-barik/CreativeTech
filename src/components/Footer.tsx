@@ -51,9 +51,9 @@ export default function Footer() {
             Contact
           </h3>
 
-          <p>info@kreativetech.com</p>
+          <p>kreative_tech@rediffmail.com</p>
 
-          <p>+91 XXXXX XXXXX</p>
+          <p>+91 9861152922</p>
 
         </div>
 
