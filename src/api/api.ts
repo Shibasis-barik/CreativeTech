@@ -507,3 +507,446 @@ export async function deleteMessage(
     },
   });
 }
+
+// Content Api
+// Home Page Content
+export interface HomeStat {
+  id: number;
+  value: string;
+  label: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HeroSystem {
+  id: number;
+  code: string;
+  label: string;
+  detail: string;
+  icon: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HeroImage {
+  id: number;
+  image_src: string | null;
+  alt_text: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeAchievement {
+  id: number;
+  key: string;
+  value: number | null;
+  suffix: string;
+  display: string;
+  title: string;
+  description: string;
+  icon: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeStatsSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  achievements: HomeAchievement[];
+}
+
+export interface HomeTrustedTechnologyFeature {
+  id: number;
+  feature: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeTrustedTechnology {
+  id: number;
+  key: string;
+  name: string;
+  category: string;
+  description: string;
+  display_order: number;
+  is_active: boolean;
+  features: HomeTrustedTechnologyFeature[];
+}
+
+export interface HomeTrustedSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  technologies: HomeTrustedTechnology[];
+}
+
+export interface HomeWhyChooseFeature {
+  id: number;
+  key: string;
+  icon: string;
+  title: string;
+  description: string;
+  color: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeWhyChooseTrustPoint {
+  id: number;
+  text: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeWhyChooseSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  trust_title: string;
+  trust_description: string;
+  learn_more_text: string;
+  learn_more_link: string;
+  is_active: boolean;
+  features: HomeWhyChooseFeature[];
+  trust_points: HomeWhyChooseTrustPoint[];
+}
+
+export interface HomeTestimonial {
+  id: number;
+  name: string;
+  designation: string;
+  company: string;
+  review: string;
+  photo_url: string | null;
+  rating: number;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeTestimonialsSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  testimonials: HomeTestimonial[];
+}
+
+// =============================================
+// Home Page Content
+// =============================================
+
+export interface HomeFooterLink {
+  id: number;
+  group: "company" | "services" | "social";
+  label: string;
+  url: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface HomeFooterSection {
+  id: number;
+  brand_name: string;
+  description: string;
+  company_heading: string;
+  services_heading: string;
+  contact_heading: string;
+  contact_email: string;
+  contact_phone: string;
+  contact_address: string;
+  copyright_text: string;
+  is_active: boolean;
+  links: HomeFooterLink[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HomePageContent {
+  id: number;
+  hero_title: string;
+  hero_description: string;
+  hero_primary_button_text: string;
+  hero_primary_button_link: string;
+  hero_secondary_button_text: string;
+  hero_secondary_button_link: string;
+  stats: HomeStat[];
+  hero_systems: HeroSystem[];
+  hero_images: HeroImage[];
+  stats_section: HomeStatsSection;
+  trusted_section: HomeTrustedSection;
+  why_choose_section: HomeWhyChooseSection;
+  testimonials_section: HomeTestimonialsSection | null;
+  footer_section: HomeFooterSection | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getHomePageContent(): Promise<HomePageContent> {
+  return apiRequest("/content/home/", {
+    method: "GET",
+  });
+}
+
+
+export interface TestimonialSubmissionData {
+  name: string;
+  designation?: string;
+  company?: string;
+  review: string;
+  rating: number;
+  photo?: File | null;
+}
+
+export interface TestimonialSubmissionResponse {
+  id: number;
+  status: "pending";
+  detail: string;
+}
+
+export async function submitTestimonial(
+  testimonial: TestimonialSubmissionData,
+): Promise<TestimonialSubmissionResponse> {
+  const formData = new FormData();
+  formData.append("name", testimonial.name.trim());
+  formData.append("designation", testimonial.designation?.trim() ?? "");
+  formData.append("company", testimonial.company?.trim() ?? "");
+  formData.append("review", testimonial.review.trim());
+  formData.append("rating", String(testimonial.rating));
+
+  if (testimonial.photo) {
+    formData.append("photo", testimonial.photo);
+  }
+
+  // Do not set Content-Type for FormData; the browser adds the boundary.
+  const response = await fetch(`${API_URL}/content/testimonials/submit/`, {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    let message = data?.detail || data?.message;
+    if (!message && data && typeof data === "object") {
+      message = Object.entries(data)
+        .map(([field, value]) => {
+          const description = Array.isArray(value)
+            ? value.join(" ")
+            : String(value);
+          return `${field}: ${description}`;
+        })
+        .join(" ");
+    }
+    throw new Error(message || "Unable to submit your testimonial. Please try again.");
+  }
+
+  return data as TestimonialSubmissionResponse;
+}
+
+// ============================================================
+// MEETING SCHEDULER
+// ============================================================
+
+export interface MeetingPlatform {
+  id: number;
+  name: string;
+  provider: "google_meet" | "microsoft_teams" | "zoom";
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface MeetingSlot {
+  id: number;
+  date: string;
+  start_time: string;
+  end_time: string;
+  notes: string;
+  platforms: MeetingPlatform[];
+  is_booked: boolean;
+}
+
+export interface MeetingAvailability {
+  start_date: string;
+  end_date: string;
+  timezone: string;
+  slots: MeetingSlot[];
+}
+
+export interface CreateMeetingBookingData {
+  slot: number;
+  platform: number;
+  full_name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  topic: string;
+}
+
+export interface MeetingBooking {
+  id: number;
+  slot: number;
+  platform: number;
+  full_name: string;
+  email: string;
+  phone: string;
+  company: string;
+  topic: string;
+  meeting_link: string;
+  google_event_id: string;
+  calendar_event_url: string;
+}
+
+export async function getMeetingPlatforms(): Promise<
+  MeetingPlatform[]
+> {
+  return apiRequest("/meetings/platforms/", {
+    method: "GET",
+  });
+}
+
+export async function getMeetingAvailability(
+  startDate?: string,
+  endDate?: string,
+): Promise<MeetingAvailability> {
+  const params = new URLSearchParams();
+
+  if (startDate) {
+    params.set("start_date", startDate);
+  }
+
+  if (endDate) {
+    params.set("end_date", endDate);
+  }
+
+  const query = params.toString();
+
+  return apiRequest(
+    `/meetings/availability/${query ? `?${query}` : ""}`,
+    {
+      method: "GET",
+    },
+  );
+}
+
+export async function createMeetingBooking(
+  booking: CreateMeetingBookingData,
+): Promise<MeetingBooking> {
+  return apiRequest("/meetings/book/", {
+    method: "POST",
+    body: JSON.stringify(booking),
+  });
+}
+
+
+// ============================================================
+// ABOUT HERO CMS
+// ============================================================
+
+export interface AboutHeroImage {
+  id: number;
+  image_src: string | null;
+  alt_text: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutHeroContent {
+  id: number;
+  title_line_one: string;
+  title_line_two: string;
+  description: string;
+  primary_button_text: string;
+  primary_button_link: string;
+  secondary_button_text: string;
+  secondary_button_link: string;
+  is_active: boolean;
+  images: AboutHeroImage[];
+}
+
+export async function getAboutHeroContent(): Promise<AboutHeroContent> {
+  return apiRequest("/content/about-hero/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// ABOUT - OUR STORY CMS
+// ============================================================
+
+export interface AboutStoryStat {
+  id: number;
+  icon: string;
+  value: string;
+  label: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutStoryContent {
+  id: number;
+  eyebrow: string;
+  title: string;
+  paragraph_one: string;
+  paragraph_two: string;
+  image_src: string | null;
+  image_url: string;
+  experience_value: string;
+  experience_label: string;
+  is_active: boolean;
+  stats: AboutStoryStat[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutStoryContent(): Promise<AboutStoryContent> {
+  return apiRequest("/content/about-story/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// ABOUT - MISSION & VISION CMS
+// ============================================================
+
+export interface AboutMissionVisionImageContent {
+  id: number;
+  image_src: string | null;
+  alt_text: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutMissionVisionCardContent {
+  id: number;
+  kind: "mission" | "vision";
+  title: string;
+  color: string;
+  short_description: string;
+  description: string;
+  display_order: number;
+  is_active: boolean;
+  images: AboutMissionVisionImageContent[];
+}
+
+export interface AboutMissionVisionContent {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  cards: AboutMissionVisionCardContent[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutMissionVisionContent(): Promise<AboutMissionVisionContent> {
+  return apiRequest("/content/about-mission-vision/", {
+    method: "GET",
+  });
+}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ShieldCheck,
@@ -6,36 +7,63 @@ import {
   Award,
   ArrowRight,
   CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 
-const features = [
-  {
-    icon: ShieldCheck,
-    title: "Secure Solutions",
-    desc: "Enterprise-grade security.",
-    color: "from-cyan-500 to-blue-600",
-  },
-  {
-    icon: Users,
-    title: "Expert Team",
-    desc: "Experienced professionals.",
-    color: "from-emerald-500 to-green-600",
-  },
-  {
-    icon: Clock,
-    title: "Fast Delivery",
-    desc: "On-time project execution.",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    icon: Award,
-    title: "Quality First",
-    desc: "Clean code & best practices.",
-    color: "from-violet-500 to-purple-600",
-  },
-];
+import {
+  getHomePageContent,
+  type HomePageContent,
+} from "../api/api";
+
+const featureIcons: Record<string, LucideIcon> = {
+  ShieldCheck,
+  Users,
+  Clock,
+  Award,
+};
 
 export default function WhyChooseUs() {
+  const [homeContent, setHomeContent] = useState<HomePageContent | null>(null);
+
+  useEffect(() => {
+    const loadHomeContent = async () => {
+      try {
+        const data = await getHomePageContent();
+        setHomeContent(data);
+      } catch (error) {
+        console.error("Failed to load Why Choose Us content:", error);
+      }
+    };
+
+    loadHomeContent();
+  }, []);
+
+  const section = homeContent?.why_choose_section;
+
+  // Hide the section when CMS has disabled it.
+  if (section && !section.is_active) {
+    return null;
+  }
+
+  // Keep the section out of the UI until the CMS data is loaded.
+  if (!section) {
+    return null;
+  }
+
+  const features = [...section.features]
+    .filter((item) => item.is_active)
+    .sort(
+      (a, b) =>
+        a.display_order - b.display_order,
+    );
+
+  const trustPoints = [...section.trust_points]
+    .filter((item) => item.is_active)
+    .sort(
+      (a, b) =>
+        a.display_order - b.display_order,
+    );
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-16 lg:py-20">
 
@@ -58,16 +86,15 @@ export default function WhyChooseUs() {
         >
 
           <span className="inline-block rounded-full bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-700">
-            WHY CHOOSE US
+            {section.eyebrow}
           </span>
 
           <h2 className="mt-4 text-3xl font-bold text-slate-900 lg:text-4xl">
-            Delivering Reliable IT Solutions
+            {section.title}
           </h2>
 
           <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-slate-600">
-            We combine innovation, expertise and modern technology to
-            deliver scalable digital solutions.
+            {section.description}
           </p>
 
         </motion.div>
@@ -85,27 +112,19 @@ export default function WhyChooseUs() {
           >
 
             <h3 className="text-2xl font-bold text-slate-900">
-              Why Businesses Trust Kreative Technology
+              {section.trust_title}
             </h3>
 
             <p className="mt-4 text-slate-600 leading-7">
-              We help startups and enterprises build secure software,
-              cloud infrastructure and AI-powered business solutions.
+              {section.trust_description}
             </p>
 
             <div className="mt-6 space-y-3">
 
-              {[
-                "Experienced Engineers",
-                "AI & Cloud Experts",
-                "24×7 Technical Support",
-                "Agile Development",
-                "Enterprise Security",
-                "100% Client Focus",
-              ].map((item) => (
+              {trustPoints.map((item) => (
 
                 <div
-                  key={item}
+                  key={item.id}
                   className="flex items-center gap-3"
                 >
 
@@ -115,7 +134,7 @@ export default function WhyChooseUs() {
                   />
 
                   <span className="text-sm text-slate-700">
-                    {item}
+                    {item.text}
                   </span>
 
                 </div>
@@ -124,13 +143,16 @@ export default function WhyChooseUs() {
 
             </div>
 
-            <button className="mt-7 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 cursor-pointer">
+            <a
+              href={section.learn_more_link || "/about"}
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
+            >
 
-              Learn More
+              {section.learn_more_text}
 
               <ArrowRight size={16} />
 
-            </button>
+            </a>
 
           </motion.div>
 
@@ -140,17 +162,18 @@ export default function WhyChooseUs() {
 
             {features.map((item) => {
 
-              const Icon = item.icon;
+              const Icon =
+                featureIcons[item.icon] ?? ShieldCheck;
 
               return (
 
                 <motion.div
-                  key={item.title}
+                  key={item.id}
                   whileHover={{
                     y: -5,
                     scale: 1.02,
                   }}
-                  className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 backdrop-blur-lg p-4 shadow-md transition-all duration-300 hover:border-cyan-300 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 p-4 shadow-md backdrop-blur-lg transition-all duration-300 hover:border-cyan-300 hover:shadow-xl"
                 >
 
                   <div
@@ -168,7 +191,7 @@ export default function WhyChooseUs() {
                   </h3>
 
                   <p className="mt-2 text-sm leading-5 text-slate-600">
-                    {item.desc}
+                    {item.description}
                   </p>
 
                 </motion.div>
