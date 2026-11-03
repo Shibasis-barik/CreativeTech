@@ -950,3 +950,514 @@ export async function getAboutMissionVisionContent(): Promise<AboutMissionVision
     method: "GET",
   });
 }
+
+// ============================================================
+// ABOUT - LEADERSHIP CMS
+// ============================================================
+
+export interface AboutLeadershipMemberContent {
+  id: number;
+  name: string;
+  role: string;
+  position: "left" | "featured" | "right";
+  image_src: string | null;
+  email: string;
+  linkedin_url: string;
+  bio: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutLeadershipContent {
+  id: number;
+  eyebrow: string;
+  heading_line_one: string;
+  heading_line_two: string;
+  heading_highlight: string;
+  description: string;
+  is_active: boolean;
+  members: AboutLeadershipMemberContent[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutLeadershipContent(): Promise<AboutLeadershipContent> {
+  return apiRequest("/content/about-leadership/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// ABOUT - TIMELINE CMS
+// ============================================================
+
+export interface AboutTimelineItemContent {
+  id: number;
+  year: string;
+  title: string;
+  description: string;
+  icon: string;
+  side: "left" | "right";
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutTimelineContent {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  items: AboutTimelineItemContent[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutTimeline(): Promise<AboutTimelineContent> {
+  return apiRequest("/content/about-timeline/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// ABOUT - CORE VALUES CMS
+// ============================================================
+
+export interface AboutCoreValueItemContent {
+  id: number;
+  step: string;
+  title: string;
+  icon: string;
+  color: string;
+  description: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutCoreValuesContent {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  center_top_label: string;
+  center_main_label: string;
+  is_active: boolean;
+  items: AboutCoreValueItemContent[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutCoreValuesContent(): Promise<AboutCoreValuesContent> {
+  return apiRequest("/content/about-core-values/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// ABOUT - CERTIFICATIONS & TECHNOLOGIES
+// ============================================================
+
+export interface AboutCertificationTechnology {
+  id: number;
+  name: string;
+  category: "certification" | "technology";
+  description: string;
+  image: string | null;
+  image_url: string;
+  website_url: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutCertificationsTechnologiesSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  items: AboutCertificationTechnology[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutCertificationsTechnologies(): Promise<AboutCertificationsTechnologiesSection> {
+  return apiRequest("/content/about-certifications-technologies/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// ABOUT - CTA API
+// ============================================================
+
+export interface AboutCTAStat {
+  id: number;
+  target: number;
+  suffix: string;
+  label: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface AboutCTASection {
+  id: number;
+  eyebrow: string;
+  title_prefix: string;
+  title_highlight: string;
+  description: string;
+  primary_button_text: string;
+  primary_button_url: string;
+  secondary_button_text: string;
+  secondary_button_url: string;
+  bottom_note: string;
+  is_active: boolean;
+  stats: AboutCTAStat[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getAboutCTA(): Promise<AboutCTASection> {
+  return apiRequest("/content/about-cta/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - HERO API
+// ============================================================
+
+export interface ServicesHeroSection {
+  id: number;
+  title_line1: string;
+  title_connector: string;
+  title_highlight_line1: string;
+  title_highlight_line2: string;
+  description: string;
+  primary_button_text: string;
+  primary_button_url: string;
+  secondary_button_text: string;
+  secondary_button_url: string;
+  image: string | null;
+  image_alt: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesHero(): Promise<ServicesHeroSection> {
+  return apiRequest("/content/services-hero/", {
+    method: "GET",
+  });
+}
+
+// ============================================================
+// SERVICES - TECHNOLOGY STACK API
+// ============================================================
+
+export interface ServicesTechnology {
+  id: number;
+  name: string;
+  icon_key: string;
+  color: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesTechStackSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  technologies: ServicesTechnology[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesTechStack(): Promise<ServicesTechStackSection> {
+  return apiRequest("/content/services-tech-stack/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - DEVELOPMENT PROCESS API
+// ============================================================
+
+export interface ServicesDevelopmentProcessStep {
+  id: number;
+  title: string;
+  description: string;
+  icon_key: string;
+  color_key: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesDevelopmentProcessSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  steps: ServicesDevelopmentProcessStep[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesDevelopmentProcess():
+  Promise<ServicesDevelopmentProcessSection> {
+  return apiRequest("/content/services-development-process/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - INDUSTRIES API
+// ============================================================
+
+export interface ServicesIndustry {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  icon_key: string;
+  accent_color: string;
+  glow_color: string;
+  ring_key: string;
+  link_text: string;
+  link_url: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesIndustriesSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  industries: ServicesIndustry[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesIndustries(): Promise<ServicesIndustriesSection> {
+  return apiRequest("/content/services-industries/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - PRICING API
+// ============================================================
+
+export interface ServicesPricingFeature {
+  id: number;
+  title: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesPricingPlan {
+  id: number;
+  title: string;
+  icon_key: string;
+  color_key: string;
+  badge: string;
+  description: string;
+  button_text: string;
+  button_url: string;
+  display_order: number;
+  is_active: boolean;
+  features: ServicesPricingFeature[];
+}
+
+export interface ServicesPricingSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  plans: ServicesPricingPlan[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesPricing(): Promise<ServicesPricingSection> {
+  return apiRequest("/content/services-pricing/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - FAQ API
+// ============================================================
+
+export interface ServicesFAQItem {
+  id: number;
+  question: string;
+  answer: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesFAQSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  faqs: ServicesFAQItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesFAQ(): Promise<ServicesFAQSection> {
+  return apiRequest("/content/services-faq/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// SERVICES - CTA API
+// ============================================================
+
+export interface ServicesCTAStat {
+  id: number;
+  target: number;
+  suffix: string;
+  label: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ServicesCTASection {
+  id: number;
+  eyebrow: string;
+  title_prefix: string;
+  title_highlight: string;
+  description: string;
+  primary_button_text: string;
+  primary_button_url: string;
+  secondary_button_text: string;
+  secondary_button_url: string;
+  bottom_note: string;
+  is_active: boolean;
+  stats: ServicesCTAStat[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getServicesCTA(): Promise<ServicesCTASection> {
+  return apiRequest("/content/services-cta/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// CONTACT - HERO API
+// ============================================================
+
+export interface ContactHeroSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getContactHero(): Promise<ContactHeroSection> {
+  return apiRequest("/content/contact-hero/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// CONTACT - OFFICE LOCATION API
+// ============================================================
+
+export interface ContactOfficeLocationSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  company_name: string;
+  office_type: string;
+  address: string;
+  phone: string;
+  email: string;
+  image_url: string | null;
+  image_alt: string;
+  map_embed_url: string;
+  directions_url: string;
+  directions_button_text: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getContactOfficeLocation(): Promise<ContactOfficeLocationSection> {
+  return apiRequest("/content/contact-office-location/", {
+    method: "GET",
+  });
+}
+
+
+// ============================================================
+// CONTACT - BUSINESS HOURS API
+// ============================================================
+
+export interface ContactBusinessHoursSchedule {
+  id: number;
+  day: string;
+  time: string;
+  is_open: boolean;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ContactBusinessHoursSupport {
+  id: number;
+  title: string;
+  value: string;
+  icon_key: string;
+  color_key: string;
+  display_order: number;
+  is_active: boolean;
+}
+
+export interface ContactBusinessHoursSection {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  office_schedule_title: string;
+  support_title: string;
+  response_time_title: string;
+  response_time_prefix: string;
+  response_time_value: string;
+  response_time_suffix: string;
+  is_active: boolean;
+  schedule: ContactBusinessHoursSchedule[];
+  support_options: ContactBusinessHoursSupport[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getContactBusinessHours(): Promise<ContactBusinessHoursSection> {
+  return apiRequest("/content/contact-business-hours/", {
+    method: "GET",
+  });
+}
