@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getAboutTimeline, type AboutTimelineContent } from "../../api/api";
 import { Building2, Rocket, Users, Trophy, Globe } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -11,7 +12,7 @@ interface TimelineItem {
   side: "left" | "right";
 }
 
-const timeline: TimelineItem[] = [
+const fallbackTimeline: TimelineItem[] = [
   {
     year: "2018",
     title: "Company Founded",
@@ -48,6 +49,19 @@ const timeline: TimelineItem[] = [
     side: "left",
   },
 ];
+
+
+const timelineIconMap: Record<string, LucideIcon> = {
+  Building2,
+  Rocket,
+  Users,
+  Trophy,
+  Globe,
+};
+
+function resolveTimelineIcon(name: string): LucideIcon {
+  return timelineIconMap[name] ?? Building2;
+}
 
 function Node({ icon: Icon }: { icon: LucideIcon }) {
   return (
@@ -185,6 +199,34 @@ function Card({
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [section, setSection] = useState<AboutTimelineContent | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getAboutTimeline()
+      .then((data) => {
+        if (!cancelled) setSection(data);
+      })
+      .catch((error: unknown) => {
+        // Keep the existing design/content as a fallback if the CMS API is unavailable.
+        console.error("Unable to load About Timeline content:", error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const timeline: TimelineItem[] = section
+    ? section.items.map((item) => ({
+        year: item.year,
+        title: item.title,
+        desc: item.description,
+        icon: resolveTimelineIcon(item.icon),
+        side: item.side,
+      }))
+    : fallbackTimeline;
 
   return (
     <section
@@ -230,15 +272,15 @@ export default function Timeline() {
           className="mb-16 text-center"
         >
           <span className="rounded-full bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-700">
-            OUR JOURNEY
+            {section?.eyebrow || "OUR JOURNEY"}
           </span>
 
           <h2 className="mt-5 text-4xl font-bold text-slate-900">
-            Company Timeline
+            {section?.title || "Company Timeline"}
           </h2>
 
           <p className="mt-6 leading-8 text-slate-600">
-            Our journey of growth, innovation, and delivering value to businesses worldwide.
+            {section?.description || "Our journey of growth, innovation, and delivering value to businesses worldwide."}
           </p>
         </motion.div>
 
@@ -251,7 +293,7 @@ export default function Timeline() {
           <div className="flex flex-col gap-6">
             {timeline.map((item, index) => (
               <motion.div
-                key={item.year}
+                key={`${item.year}-${item.title}`}
                 initial={{ opacity: 0, x: item.side === "left" ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}

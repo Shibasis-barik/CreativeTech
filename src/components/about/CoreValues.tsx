@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ShieldCheck,
@@ -6,10 +7,44 @@ import {
   HeartHandshake,
   Rocket,
   Sparkles,
+  Award,
+  Brain,
+  Target,
+  Handshake,
+  Compass,
+  type LucideIcon,
 } from "lucide-react";
+import {
+  getAboutCoreValuesContent,
+  type AboutCoreValuesContent,
+} from "../../api/api";
 
-const values = [
+interface CoreValueItemView {
+  id: number | string;
+  step: string;
+  title: string;
+  icon: LucideIcon;
+  color: string;
+  desc: string;
+}
+
+const iconMap: Record<string, LucideIcon> = {
+  ShieldCheck,
+  Lightbulb,
+  Users,
+  HeartHandshake,
+  Rocket,
+  Sparkles,
+  Award,
+  Brain,
+  Target,
+  Handshake,
+  Compass,
+};
+
+const fallbackValues: CoreValueItemView[] = [
   {
+    id: "innovation",
     step: "01",
     title: "Innovation",
     icon: Lightbulb,
@@ -17,6 +52,7 @@ const values = [
     desc: "We embrace creativity and build innovative digital solutions.",
   },
   {
+    id: "integrity",
     step: "02",
     title: "Integrity",
     icon: ShieldCheck,
@@ -24,6 +60,7 @@ const values = [
     desc: "Honesty and transparency guide everything we do.",
   },
   {
+    id: "collaboration",
     step: "03",
     title: "Collaboration",
     icon: Users,
@@ -31,6 +68,7 @@ const values = [
     desc: "We work closely with clients to achieve shared success.",
   },
   {
+    id: "excellence",
     step: "04",
     title: "Excellence",
     icon: Sparkles,
@@ -38,6 +76,7 @@ const values = [
     desc: "We strive for excellence in every project we deliver.",
   },
   {
+    id: "commitment",
     step: "05",
     title: "Commitment",
     icon: HeartHandshake,
@@ -45,6 +84,7 @@ const values = [
     desc: "Delivering quality and long-term value, always.",
   },
   {
+    id: "growth",
     step: "06",
     title: "Growth",
     icon: Rocket,
@@ -53,7 +93,6 @@ const values = [
   },
 ];
 
-// Position each card on the circle, starting from the top (-90deg), evenly spaced
 function getPosition(index: number, total: number, radius: number) {
   const angle = (index * (360 / total) - 90) * (Math.PI / 180);
   return {
@@ -66,7 +105,7 @@ function GlassCard({
   item,
   index,
 }: {
-  item: (typeof values)[number];
+  item: CoreValueItemView;
   index: number;
 }) {
   const Icon = item.icon;
@@ -83,25 +122,18 @@ function GlassCard({
       whileHover={{ scale: 1.06, y: -12 }}
       className="group relative w-36 overflow-hidden rounded-2xl border border-white/50 bg-white/40 p-4 text-center shadow-[0_8px_28px_rgba(31,41,55,0.15)] backdrop-blur-xl transition-colors duration-300 hover:border-white/80 hover:bg-white/60 sm:w-44 sm:p-5"
     >
-      {/* Glass sheen */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent" />
-
-      {/* Step number */}
       <span className="absolute right-3 top-3 text-[10px] font-bold tracking-wide text-slate-400">
         {item.step}
       </span>
-
-      {/* Icon */}
       <div
         className={`relative mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-r ${item.color} text-white shadow-lg transition group-hover:rotate-6 group-hover:scale-110 sm:h-12 sm:w-12`}
       >
         <Icon size={20} />
       </div>
-
       <h3 className="relative mt-3 text-sm font-bold text-slate-900 sm:text-base">
         {item.title}
       </h3>
-
       <p className="relative mt-1.5 hidden text-xs leading-5 text-slate-600 sm:block">
         {item.desc}
       </p>
@@ -110,13 +142,50 @@ function GlassCard({
 }
 
 export default function CoreValues() {
-  const radius = 40; // percent of container
+  const radius = 40;
+  const [content, setContent] = useState<AboutCoreValuesContent | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getAboutCoreValuesContent()
+      .then((data) => {
+        if (!cancelled) setContent(data);
+      })
+      .catch((error: unknown) => {
+        console.error("Failed to load About Core Values content:", error);
+        // Preserve the existing design/content if the API is temporarily unavailable.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const values: CoreValueItemView[] = content
+    ? content.items.map((item) => ({
+        id: item.id,
+        step: item.step,
+        title: item.title,
+        icon: iconMap[item.icon] ?? Sparkles,
+        color: item.color,
+        desc: item.description,
+      }))
+    : fallbackValues;
+
+  const eyebrow = content?.eyebrow ?? "CORE VALUES";
+  const title = content?.title ?? "Principles That Guide Our Success";
+  const description =
+    content?.description ??
+    "Our values define how we work, innovate and build lasting relationships with our clients.";
+  const centerTopLabel = content?.center_top_label ?? "Our";
+  const centerMainLabel = content?.center_main_label ?? "Values";
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20">
       {/* Background Glow */}
-      <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-cyan-300/20 blur-3xl"></div>
-      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-blue-300/20 blur-3xl"></div>
+      <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-cyan-300/20 blur-3xl" />
+      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-blue-300/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Heading */}
@@ -127,16 +196,11 @@ export default function CoreValues() {
           className="mb-14 text-center"
         >
           <span className="inline-block rounded-full bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-700">
-            CORE VALUES
+            {eyebrow}
           </span>
-
-          <h2 className="mt-5 text-4xl font-bold text-slate-900">
-            Principles That Guide Our Success
-          </h2>
-
+          <h2 className="mt-5 text-4xl font-bold text-slate-900">{title}</h2>
           <p className="mx-auto mt-4 max-w-3xl text-lg text-slate-600">
-            Our values define how we work, innovate and build lasting
-            relationships with our clients.
+            {description}
           </p>
         </motion.div>
 
@@ -176,10 +240,10 @@ export default function CoreValues() {
           />
           <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-white/60 bg-white/50 text-center shadow-lg backdrop-blur-xl">
             <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600">
-              Our
+              {centerTopLabel}
             </span>
             <span className="text-sm font-extrabold text-slate-900">
-              Values
+              {centerMainLabel}
             </span>
           </div>
 
@@ -188,7 +252,7 @@ export default function CoreValues() {
             const pos = getPosition(index, values.length, radius);
             return (
               <div
-                key={item.title}
+                key={item.id}
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={pos}
               >
@@ -204,7 +268,7 @@ export default function CoreValues() {
             const Icon = item.icon;
             return (
               <motion.div
-                key={item.title}
+                key={item.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.08 }}
