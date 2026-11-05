@@ -1,6 +1,6 @@
-
 import { useEffect, useMemo, useState, type ComponentType } from "react";
 import { motion } from "framer-motion";
+import SectionSkeleton from "../SectionSkeleton";
 import {
   Check,
   Briefcase,
@@ -49,6 +49,7 @@ export default function PricingModel() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   // ============================================================
   // FETCH PRICING CONTENT FROM DJANGO
@@ -65,6 +66,11 @@ export default function PricingModel() {
         const response = await getServicesPricing();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -115,15 +121,14 @@ export default function PricingModel() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-24">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-slate-500">
-            Loading pricing plans...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="cards"
+        tone="light"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

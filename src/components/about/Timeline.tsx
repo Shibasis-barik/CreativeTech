@@ -200,13 +200,21 @@ function Card({
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [section, setSection] = useState<AboutTimelineContent | null>(null);
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
     getAboutTimeline()
       .then((data) => {
-        if (!cancelled) setSection(data);
+        if (cancelled) return;
+
+        if (!data.is_active) {
+          setIsSectionActive(false);
+          return;
+        }
+
+        setSection(data);
       })
       .catch((error: unknown) => {
         // Keep the existing design/content as a fallback if the CMS API is unavailable.
@@ -228,6 +236,8 @@ export default function Timeline() {
       }))
     : fallbackTimeline;
 
+  if (!isSectionActive) return null;
+  
   return (
     <section
       ref={containerRef}

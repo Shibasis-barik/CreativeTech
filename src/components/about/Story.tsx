@@ -7,7 +7,7 @@ import {
   Globe,
   type LucideIcon,
 } from "lucide-react";
-import officeImg from "../../assets/about/officeImg.jpeg";
+import officeImg from "../../assets/about/officeImg.webp";
 import {
   getAboutStoryContent,
   type AboutStoryContent,

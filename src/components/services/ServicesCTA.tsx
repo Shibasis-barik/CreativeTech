@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import {
   motion,
@@ -7,6 +6,8 @@ import {
   useMotionTemplate,
   type Variants,
 } from "framer-motion";
+
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   ArrowRight,
@@ -210,6 +211,7 @@ export default function ServicesCTA() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   const [statsInView, setStatsInView] = useState(false);
 
@@ -228,6 +230,11 @@ export default function ServicesCTA() {
         const response = await getServicesCTA();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -319,7 +326,7 @@ export default function ServicesCTA() {
 
   const spotlightBackground = useMotionTemplate`
     radial-gradient(
-      500px circle at ${spotlightX} ${spotlightY},
+      500px circle at ${spotlightX}% ${spotlightY}%,
       rgba(34,211,238,0.10),
       transparent 70%
     )
@@ -342,15 +349,14 @@ export default function ServicesCTA() {
 
   if (loading) {
     return (
-      <section className="bg-slate-50 py-20 dark:bg-slate-950">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Loading Services CTA...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="cta"
+        tone={theme === "dark" ? "dark" : "light"}
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

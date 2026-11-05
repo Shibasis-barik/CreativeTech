@@ -47,8 +47,22 @@ export default function AdminDashboard() {
 
     getCurrentUser(token)
       .then((data) => {
-        if (data.role !== "Admin") {
-          navigate("/dashboard");
+        const adminPermissions = [
+          "manage_users",
+          "manage_roles",
+          "manage_services",
+          "manage_content",
+          "manage_messages",
+        ];
+
+        const hasAdminAccess =
+          data.is_superuser ||
+          data.permissions.some((permission: string) =>
+            adminPermissions.includes(permission)
+          );
+
+        if (!hasAdminAccess) {
+          navigate("/dashboard", { replace: true });
           return;
         }
 
@@ -153,7 +167,9 @@ export default function AdminDashboard() {
 
         <main className="flex-1 p-6 lg:p-10">
           <div className="mx-auto max-w-7xl">
-            <AdminDashboardStats />
+            {(user.role === "Admin" || user.is_superuser) && (
+              <AdminDashboardStats />
+            )}
             <div className="mb-10">
               <p className="text-sm font-medium text-cyan-400">
                 ADMINISTRATION

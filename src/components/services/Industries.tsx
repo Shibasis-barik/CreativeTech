@@ -1,6 +1,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   HeartPulse,
@@ -64,6 +65,7 @@ export default function Industries() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   // ============================================================
   // FETCH INDUSTRIES FROM DJANGO API
@@ -80,6 +82,11 @@ export default function Industries() {
         const response = await getServicesIndustries();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -122,15 +129,14 @@ export default function Industries() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-[#05070f] py-24">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-slate-400">
-            Loading industries...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="cards"
+        tone="dark"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

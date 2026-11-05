@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import officeLocationImage from "../../assets/officeImg.jpeg";
+import officeLocationImage from "../../assets/officeImg.webp";
 
 import {
   MapPin,

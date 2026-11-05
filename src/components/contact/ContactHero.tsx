@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   getContactHero,
@@ -15,6 +15,7 @@ export default function ContactHero() {
   const [section, setSection] = useState<ContactHeroData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   // ============================================================
   // FETCH CONTENT FROM DJANGO API
@@ -31,6 +32,11 @@ export default function ContactHero() {
         const response = await getContactHero();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -59,15 +65,14 @@ export default function ContactHero() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 py-28">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <p className="text-cyan-300">
-            Loading Contact...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="hero"
+        tone="dark"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

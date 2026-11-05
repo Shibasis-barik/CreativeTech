@@ -5,10 +5,10 @@ import { ArrowRight } from "lucide-react";
 import MissionModal from "./MissionModal";
 import type { MissionModalData } from "./MissionModal";
 
-import missionImg1 from "../../assets/about/missionImg1.jpeg";
-import missionImg2 from "../../assets/about/missionImg2.jpeg";
-import visionImg1 from "../../assets/about/visionImg1.jpeg";
-import visionImg2 from "../../assets/about/visionImg2.jpeg";
+import missionImg1 from "../../assets/about/missionImg1.webp";
+import missionImg2 from "../../assets/about/missionImg2.webp";
+import visionImg1 from "../../assets/about/visionImg1.webp";
+import visionImg2 from "../../assets/about/visionImg2.webp";
 import {
   getAboutMissionVisionContent,
   type AboutMissionVisionCardContent,
@@ -196,19 +196,25 @@ export default function MissionVision() {
   const [activeCard, setActiveCard] = useState<MissionModalData | null>(null);
   const [section, setSection] = useState<AboutMissionVisionContent>(fallbackSection);
   const [cards, setCards] = useState<MissionVisionCard[]>(fallbackCards);
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
     getAboutMissionVisionContent()
       .then((data) => {
-        if (!isMounted || !data.is_active) return;
+        if (!isMounted) return;
+
+        if (!data.is_active) {
+          setIsSectionActive(false);
+          return;
+        }
         setSection(data);
         const activeCards = data.cards
           .filter((item) => item.is_active)
           .sort((a, b) => a.display_order - b.display_order)
           .map(mapApiCard);
-        if (activeCards.length > 0) setCards(activeCards);
+        setCards(activeCards);
       })
       .catch((error: unknown) => {
         console.error("Failed to load About Mission & Vision content:", error);
@@ -223,6 +229,8 @@ export default function MissionVision() {
     () => cards.slice().sort((a, b) => a.displayOrder - b.displayOrder),
     [cards],
   );
+
+  if (!isSectionActive) return null;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20">

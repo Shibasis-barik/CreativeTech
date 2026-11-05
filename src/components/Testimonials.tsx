@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { Quote, Star, Send, Loader2, MessageSquareQuote } from "lucide-react";
+import SectionSkeleton from "./SectionSkeleton";
 
 import {
   getHomePageContent,
@@ -111,7 +112,20 @@ export default function Testimonials() {
     setPhoto(selected);
   }
 
-  if (isLoading || !section || !section.is_active) return null;
+  // Show skeleton while testimonials are loading.
+  if (isLoading) {
+    return (
+      <SectionSkeleton
+        variant="cards"
+        tone="light"
+      />
+    );
+  }
+
+  // Hide section if CMS has disabled it or no content exists.
+  if (!section || !section.is_active) {
+    return null;
+  }
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 py-24">
