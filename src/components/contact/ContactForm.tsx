@@ -9,6 +9,7 @@ import {
   IndianRupee,
   MessageSquare,
   Send,
+  Loader2,
 } from "lucide-react";
 
 import {
@@ -36,18 +37,29 @@ export default function ContactForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     const loadServices = async () => {
       try {
         const data = await getPublicServices();
-        setServices(data);
+
+        if (isMounted) {
+          setServices(data.filter((service) => service.is_active));
+        }
       } catch (err) {
         console.error("Unable to load services:", err);
       } finally {
-        setLoadingServices(false);
+        if (isMounted) {
+          setLoadingServices(false);
+        }
       }
     };
 
     loadServices();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleChange = (
@@ -410,11 +422,17 @@ export default function ContactForm() {
                 disabled={submitting || loadingServices}
                 className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 font-semibold text-white transition duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <Send size={18} />
-
-                {submitting
-                  ? "Sending..."
-                  : "Send Message"}
+                {submitting ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    Sending Message...
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </motion.div>

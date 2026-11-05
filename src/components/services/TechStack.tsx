@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import { motion } from "framer-motion";
 
@@ -15,6 +14,8 @@ import {
   SiLinux,
   SiNodedotjs,
 } from "react-icons/si";
+
+import SectionSkeleton from "../SectionSkeleton";
 
 import { Cloud, CloudCog } from "lucide-react";
 
@@ -57,6 +58,7 @@ export default function TechStack() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -81,6 +83,11 @@ export default function TechStack() {
         const response = await getServicesTechStack();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -253,15 +260,14 @@ export default function TechStack() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-slate-50 py-12 dark:bg-slate-900">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Loading technologies...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="cards"
+        tone="light"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

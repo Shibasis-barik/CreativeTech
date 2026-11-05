@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.jpeg";
-import loginIllustration from "../../assets/login-ai.png";
+import loginIllustration from "../../assets/login-ai.webp";
 import FloatingParticles from "./FloatingParticles";
 
 interface Props {

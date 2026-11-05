@@ -22,7 +22,8 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-import backgroundImg from "../../assets/service/backgroundImg.png";
+import SectionSkeleton from "../SectionSkeleton";
+import backgroundImg from "../../assets/service/backgroundImg.webp";
 import { useTheme } from "../../hooks/useTheme";
 import { getPublicServices, type Service, } from "../../api/api";
 
@@ -145,6 +146,15 @@ export default function ServiceGrid() {
     });
   }, [services]);
 
+  if (loading) {
+  return (
+    <SectionSkeleton
+      variant="cards"
+      tone={theme === "dark" ? "dark" : "light"}
+    />
+  );
+}
+
   return (
     <section
       id="service-grid"
@@ -184,20 +194,11 @@ export default function ServiceGrid() {
         </p>
       </motion.div>
 
-      {/* Loading */}
-      {loading && (
-        <div className="relative mx-auto max-w-7xl px-5 text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Loading services...
-          </p>
-        </div>
-      )}
-
       {/* Error */}
-      {!loading && error && (
+      {error && (
         <div className="relative mx-auto max-w-7xl px-5 text-center">
           <p className="text-red-500">
-            Unable to load services right now.
+            {error || "Unable to load services right now."}
           </p>
         </div>
       )}

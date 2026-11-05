@@ -21,6 +21,8 @@ import {
   Check,
 } from "lucide-react";
 
+import SectionSkeleton from "./SectionSkeleton";
+
 import {
   getHomePageContent,
   type HomePageContent,
@@ -834,17 +836,23 @@ export default function TrustedCompanies() {
   /* -------------------------------------------------------------- */
 
   if (!homeContent) {
+  if (error) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/60 to-white py-20">
-        <div className="relative mx-auto max-w-7xl px-6 text-center">
-          <p className="text-sm font-medium text-slate-500">
-            {error ||
-              "Loading trusted technologies..."}
-          </p>
-        </div>
+      <section className="bg-white px-6 py-20 text-center">
+        <p className="font-medium text-red-500">
+          {error}
+        </p>
       </section>
     );
   }
+
+  return (
+    <SectionSkeleton
+      variant="cards"
+      tone="light"
+    />
+  );
+}
 
 
   /* -------------------------------------------------------------- */

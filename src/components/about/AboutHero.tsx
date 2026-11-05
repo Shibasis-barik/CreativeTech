@@ -9,10 +9,10 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-import aboutImg1 from "../../assets/about/about_img1.jpeg";
-import aboutImg2 from "../../assets/about/about_img2.jpeg";
-import aboutImg3 from "../../assets/about/about_img3.jpeg";
-import aboutImg4 from "../../assets/about/about_img4.jpeg";
+import aboutImg1 from "../../assets/about/about_img1.webp";
+import aboutImg2 from "../../assets/about/about_img2.webp";
+import aboutImg3 from "../../assets/about/about_img3.webp";
+import aboutImg4 from "../../assets/about/about_img4.webp";
 
 import {
   getAboutHeroContent,

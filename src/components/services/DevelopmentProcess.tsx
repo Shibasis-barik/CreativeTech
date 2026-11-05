@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   Search,
@@ -54,6 +54,7 @@ export default function DevelopmentProcess() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   // ============================================================
   // FETCH CONTENT FROM DJANGO API
@@ -70,6 +71,11 @@ export default function DevelopmentProcess() {
         const response = await getServicesDevelopmentProcess();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -112,15 +118,14 @@ export default function DevelopmentProcess() {
 
   if (loading) {
     return (
-      <section className="bg-gradient-to-b from-slate-50 to-white py-24">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-slate-500">
-            Loading development process...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="timeline"
+        tone="light"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import serviceHeroImage from "../../assets/service/hero.png";
+import serviceHeroImage from "../../assets/service/hero.webp";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   getServicesHero,
@@ -30,6 +31,7 @@ const particles = [
 
 export default function ServicesHero() {
   const [section, setSection] = useState<ServicesHeroData | null>(null);
+  const [isSectionActive, setIsSectionActive] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -48,6 +50,11 @@ export default function ServicesHero() {
         const response = await getServicesHero();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -75,14 +82,10 @@ export default function ServicesHero() {
   // ============================================================
 
   if (loading) {
-    return (
-      <section className="flex min-h-[calc(100svh-73px)] items-center justify-center bg-[#030817] text-white">
-        <p className="text-slate-300">
-          Loading Services...
-        </p>
-      </section>
-    );
+    return <SectionSkeleton variant="hero" tone="dark" />;
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

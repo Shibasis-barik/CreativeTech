@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
+import SectionSkeleton from "./SectionSkeleton";
 
 import {
   getHomePageContent,
@@ -23,30 +24,71 @@ const featureIcons: Record<string, LucideIcon> = {
 };
 
 export default function WhyChooseUs() {
-  const [homeContent, setHomeContent] = useState<HomePageContent | null>(null);
+  const [homeContent, setHomeContent] =
+    useState<HomePageContent | null>(null);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let mounted = true;
+
     const loadHomeContent = async () => {
       try {
         const data = await getHomePageContent();
-        setHomeContent(data);
-      } catch (error) {
-        console.error("Failed to load Why Choose Us content:", error);
+
+        if (mounted) {
+          setHomeContent(data);
+          setError(null);
+        }
+      } catch (err) {
+        console.error(
+          "Failed to load Why Choose Us content:",
+          err
+        );
+
+        if (mounted) {
+          setError("Unable to load Why Choose Us content.");
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
     loadHomeContent();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const section = homeContent?.why_choose_section;
 
-  // Hide the section when CMS has disabled it.
-  if (section && !section.is_active) {
-    return null;
+  // Show skeleton while API data loads.
+if (loading) {
+  return (
+    <SectionSkeleton
+      variant="cards"
+      tone="light"
+    />
+  );
+}
+
+  // Show error if API request fails.
+  if (error) {
+    return (
+      <section className="bg-white px-6 py-16 text-center">
+        <p className="font-medium text-red-500">
+          {error}
+        </p>
+      </section>
+    );
   }
 
-  // Keep the section out of the UI until the CMS data is loaded.
-  if (!section) {
+  // Hide section if CMS has disabled it.
+  if (!section || !section.is_active) {
     return null;
   }
 

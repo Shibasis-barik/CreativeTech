@@ -144,13 +144,21 @@ function GlassCard({
 export default function CoreValues() {
   const radius = 40;
   const [content, setContent] = useState<AboutCoreValuesContent | null>(null);
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
     getAboutCoreValuesContent()
       .then((data) => {
-        if (!cancelled) setContent(data);
+        if (cancelled) return;
+
+        if (!data.is_active) {
+          setIsSectionActive(false);
+          return;
+        }
+
+        setContent(data);
       })
       .catch((error: unknown) => {
         console.error("Failed to load About Core Values content:", error);
@@ -180,6 +188,7 @@ export default function CoreValues() {
     "Our values define how we work, innovate and build lasting relationships with our clients.";
   const centerTopLabel = content?.center_top_label ?? "Our";
   const centerMainLabel = content?.center_main_label ?? "Values";
+  if (!isSectionActive) return null;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20">

@@ -17,6 +17,7 @@ import {
 import { SiReact, SiPython, SiDocker } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   getAboutCTA,
@@ -205,6 +206,7 @@ export default function AboutCTA() {
 
   const [section, setSection] =
     useState<AboutCTASection | null>(null);
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -224,6 +226,11 @@ export default function AboutCTA() {
         const response = await getAboutCTA();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -342,15 +349,14 @@ export default function AboutCTA() {
 
   if (loading) {
     return (
-      <section className="bg-slate-50 py-20 dark:bg-slate-950">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Loading About CTA...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="cta"
+        tone={theme === "dark" ? "dark" : "light"}
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

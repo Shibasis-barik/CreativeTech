@@ -1,7 +1,7 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import SectionSkeleton from "../SectionSkeleton";
 
 import {
   getServicesFAQ,
@@ -18,6 +18,7 @@ export default function FAQ() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   const [openFaqId, setOpenFaqId] = useState<number | null>(null);
 
@@ -36,6 +37,11 @@ export default function FAQ() {
         const response = await getServicesFAQ();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -102,15 +108,14 @@ export default function FAQ() {
 
   if (loading) {
     return (
-      <section className="relative overflow-hidden bg-white py-24">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="text-slate-500">
-            Loading FAQs...
-          </p>
-        </div>
-      </section>
+      <SectionSkeleton
+        variant="faq"
+        tone="light"
+      />
     );
   }
+
+  if (!isSectionActive) return null;
 
   // ============================================================
   // ERROR STATE

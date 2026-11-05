@@ -107,12 +107,19 @@ function SideCard({ item, index }: SideCardProps) {
 
 export default function Leadership() {
   const [content, setContent] = useState<AboutLeadershipContent>(fallbackContent);
+  const [isSectionActive, setIsSectionActive] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
     getAboutLeadershipContent()
       .then((data) => {
-        if (!isMounted || !data.is_active) return;
+        if (!isMounted) return;
+
+        if (!data.is_active) {
+          setIsSectionActive(false);
+          return;
+        }
+
         setContent({
           ...data,
           members: data.members?.length ? data.members : fallbackMembers,
@@ -132,6 +139,7 @@ export default function Leadership() {
   const right = members.filter((member) => member.position === "right");
   const featured = members.find((member) => member.position === "featured")
     ?? fallbackMembers.find((member) => member.position === "featured")!;
+  if (!isSectionActive) return null;
 
   return (
     <section className="relative overflow-hidden bg-transparent py-24 dark:bg-[#0a0f1a]">

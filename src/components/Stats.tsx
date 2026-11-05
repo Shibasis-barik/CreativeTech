@@ -27,6 +27,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import SectionSkeleton from "./SectionSkeleton";
+
 import {
   getHomePageContent,
   type HomePageContent,
@@ -846,17 +848,23 @@ export default function Stats() {
   /* -------------------------------------------------------------- */
 
   if (!homeContent) {
+  if (error) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50 to-white py-24">
-        <div className="relative mx-auto max-w-6xl px-6 text-center">
-          <p className="text-sm font-medium text-slate-500">
-            {error ||
-              "Loading achievements..."}
-          </p>
-        </div>
+      <section className="bg-white px-6 py-20 text-center">
+        <p className="text-red-500 font-medium">
+          {error}
+        </p>
       </section>
     );
   }
+
+  return (
+    <SectionSkeleton
+      variant="stats"
+      tone="light"
+    />
+  );
+}
 
 
   /* -------------------------------------------------------------- */

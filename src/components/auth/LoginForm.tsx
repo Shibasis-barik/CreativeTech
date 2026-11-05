@@ -50,10 +50,24 @@ export default function LoginForm() {
 
       storage.setItem("user", JSON.stringify(user));
 
-      if (user.role === "Admin") {
-        navigate("/admin");
+      const adminPermissions = [
+        "manage_users",
+        "manage_roles",
+        "manage_services",
+        "manage_content",
+        "manage_messages",
+      ];
+
+      const hasAdminAccess =
+        user.is_superuser ||
+        user.permissions.some((permission: string) =>
+          adminPermissions.includes(permission)
+        );
+
+      if (hasAdminAccess) {
+        navigate("/admin", { replace: true });
       } else {
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
       }
     } catch (err) {
       setError(

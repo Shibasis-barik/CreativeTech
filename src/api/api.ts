@@ -80,11 +80,26 @@ async function refreshAccessToken(): Promise<string | null> {
   return refreshPromise;
 }
 
+let activeApiRequests = 0;
+
+function notifyApiLoading(loading: boolean) {
+  window.dispatchEvent(
+    new CustomEvent("kt:api-loading", {
+      detail: { loading },
+    })
+  );
+}
+
+
 async function apiRequest(
   endpoint: string,
   options: RequestInit = {},
   retry = true,
 ): Promise<any> {
+  activeApiRequests += 1;
+  notifyApiLoading(true);
+
+  try {
   const storage = getStorage();
 
   const storedAccessToken = storage?.getItem("access_token");
@@ -157,7 +172,16 @@ async function apiRequest(
   }
 
   return data;
+  } finally {
+    activeApiRequests = Math.max(
+      0,
+      activeApiRequests - 1
+    );
+
+    notifyApiLoading(activeApiRequests > 0);
+  }
 }
+
 
 export async function login(
   email: string,

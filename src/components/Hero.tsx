@@ -15,6 +15,7 @@ import { getHomePageContent, type HomePageContent } from "../api/api";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import SectionSkeleton from "./SectionSkeleton";
 
 const iconMap = {
   Terminal,
@@ -84,23 +85,29 @@ export default function Hero() {
   }, [content]);
 
   if (!content) {
-    return (
-      <section className="flex min-h-screen items-center justify-center bg-[#0B0F14] px-6 text-[#F4F1E8]">
-        <div className="text-center">
-          <p className="font-mono text-xs tracking-widest text-[#6E8AA6]">
-            {error || "LOADING HOMEPAGE..."}
-          </p>
+    if (error) {
+      return (
+        <section className="flex min-h-screen items-center justify-center bg-[#0B0F14] px-6 text-[#F4F1E8]">
+          <div className="text-center">
+            <p className="text-lg font-semibold text-red-400">
+              {error}
+            </p>
 
-          {error && (
             <p className="mt-3 text-sm text-[#93A0AC]">
               Please make sure the Django backend is running.
             </p>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      );
+    }
+
+    return (
+      <SectionSkeleton
+        variant="hero"
+        tone="dark"
+      />
     );
   }
-
   return (
     <section className="relative isolate w-full min-h-screen overflow-x-hidden bg-[#0B0F14] text-[#F4F1E8]">
       {/* Blueprint grid */}

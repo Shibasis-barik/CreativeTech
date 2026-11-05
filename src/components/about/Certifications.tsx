@@ -30,6 +30,8 @@ import {
   SiGit,
 } from "react-icons/si";
 
+import SectionSkeleton from "../SectionSkeleton";
+
 import {
   getAboutCertificationsTechnologies,
   type AboutCertificationTechnology,
@@ -242,6 +244,8 @@ export default function Certifications() {
   const [section, setSection] =
     useState<AboutCertificationsTechnologiesSection | null>(null);
 
+  const [isSectionActive, setIsSectionActive] = useState(true);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -265,6 +269,11 @@ export default function Certifications() {
         const response = await getAboutCertificationsTechnologies();
 
         if (isMounted) {
+          if (!response.is_active) {
+            setIsSectionActive(false);
+            return;
+          }
+
           setSection(response);
         }
       } catch (err) {
@@ -425,16 +434,10 @@ export default function Certifications() {
   );
 
   if (loading) {
-    return (
-      <section className="bg-slate-50 py-20 dark:bg-slate-900">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Loading Certifications & Technologies...
-          </p>
-        </div>
-      </section>
-    );
+    return <SectionSkeleton variant="cards" tone="light" />;
   }
+
+  if (!isSectionActive) return null;
 
   if (error || !section) {
     return (
